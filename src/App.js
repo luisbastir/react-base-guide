@@ -14,25 +14,32 @@ class App extends Component {
     showPersons: false
   }
 
-  /*switchNameHandler = (newName) => {
+  switchNameHandler = (newName) => {
     this.setState({
       persons: [
-        { name: newName, age: 22},
-        { name: "Sebastian", age: 28},
-        { name: "Miguel", age: 27}
+        { id: "asd1", name: newName, age: 22},
+        { id: "dsa2", name: "Sebastian", age: 28},
+        { id: "sad3", name: "Miguel", age: 27}
       ]
     })
   }
 
-  nameChangedHander = (event) => {
-    this.setState({
-      persons: [
-        { name: "Luis", age: 23},
-        { name: event.target.value, age: 29},
-        { name: "Alex", age: 25}
-      ]
+  nameChangedHander = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id
     })
-  }*/
+
+    const person = {
+      ...this.state.persons[personIndex]
+    }
+
+    person.name = event.target.value;
+
+    const persons = [...this.state.persons]
+    persons[personIndex] = person;
+
+    this.setState({persons: persons})
+  }
 
   deletePersonHandler = (personIndex) => {
     const persons = [...this.state.persons];
@@ -47,7 +54,8 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: "white",
+      backgroundColor: "green",
+      color: "white",
       font: "inherint",
       border: "1px solid blue",
       padding: "8px",
@@ -64,11 +72,22 @@ class App extends Component {
                 name={person.name}
                 age={person.age}
                 click={() => this.deletePersonHandler(index)}
-                key={person.id} />
+                key={person.id}
+                changed={(event) => this.nameChangedHander(event, person.id)} />
             );
           })}
         </div>
       );
+
+      style.backgroundColor = "red"
+    }
+
+    let classes = []
+    if (this.state.persons.length <= 2) {
+      classes.push("red")
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push("bold")
     }
 
     return (
@@ -78,7 +97,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          To get started, edit <code className={classes.join(" ")}>src/App.js</code> and save to reload.
         </p>
         <button style={style} onClick={ this.togglePersonsHandler }>Toggle Persons</button>
         {persons}
