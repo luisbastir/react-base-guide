@@ -2,7 +2,7 @@
 
 This is a demo app using React-js. This project is based on a course taught by Maximilian Schwarzmüller for learning and practicing purposes.
 
-TODO: add description
+The main purpose is to use this project as a template to implement basic and advances features with React-js on future projects.
 
 ## Getting Started
 
